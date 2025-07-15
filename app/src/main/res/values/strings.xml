@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Paging3Demo</string>
+    <string name="message_no_internet">No internet connection.</string>
+</resources>
