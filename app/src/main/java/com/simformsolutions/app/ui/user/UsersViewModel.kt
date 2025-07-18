@@ -2,6 +2,10 @@ package com.simformsolutions.app.ui.user
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
 import com.simformsolutions.app.common.dispatcher.IoDispatcher
 import com.simformsolutions.app.domain.model.User
 import com.simformsolutions.app.domain.remote.apiresult.mapOnSuccess
@@ -12,6 +16,7 @@ import com.simformsolutions.app.domain.repository.UsersRepository
 import com.simformsolutions.app.ui.user.navigation.UserDetails
 import com.simform.navigation.Navigator
 import com.simform.navigation.getResult
+import com.simformsolutions.app.ui.paging.UserDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -42,6 +47,14 @@ class UsersViewModel @Inject constructor(
         started = SharingStarted.Lazily,
         initialValue = getDefaultUiState()
     )
+
+    val userPager = Pager(
+        PagingConfig(
+            pageSize = 20
+        )
+    ) {
+        UserDataSource(usersRepository)
+    }.flow.cachedIn(viewModelScope)
 
     init {
         viewModelScope.launch(ioDispatcher) {

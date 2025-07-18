@@ -15,6 +15,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.simform.design.progress.AppFullScreenProgressIndicator
 import com.simform.design.scaffold.AppScaffold
 import com.simform.design.theme.AppPreviewTheme
@@ -34,10 +36,11 @@ fun UsersRoute(
     viewModel: UsersViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
+    val pagingList = viewModel.userPager.collectAsLazyPagingItems()
     UsersScreen(
         modifier = modifier,
         uiState = uiState,
+        pagingList = pagingList,
         onUserClick = viewModel::onUserClick
     )
 }
@@ -53,6 +56,7 @@ fun UsersRoute(
 private fun UsersScreen(
     modifier: Modifier = Modifier,
     uiState: UsersUiState,
+    pagingList: LazyPagingItems<User>,
     onUserClick: (User) -> Unit
 ) {
     AppScaffold(modifier = modifier) { innerPadding ->
@@ -63,6 +67,7 @@ private fun UsersScreen(
                 modifier = Modifier
                     .padding(innerPadding),
                 uiState = uiState,
+                pagingList = pagingList,
                 onUserClick = onUserClick
             )
         }
@@ -80,14 +85,16 @@ private fun UsersScreen(
 private fun UsersMainContent(
     modifier: Modifier = Modifier,
     uiState: UsersUiState,
+    pagingList: LazyPagingItems<User>,
     onUserClick: (User) -> Unit,
 ) {
-    val users = remember(uiState.users) { uiState.users }
+//    val users = remember(uiState.users) { uiState.users }
 
     LazyColumn(
         modifier = modifier
     ) {
-        items(users) { user ->
+        items(pagingList.itemCount) { index ->
+            val user = pagingList[index] ?: return@items
             UserItem(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -104,35 +111,35 @@ private fun UsersMainContent(
         }
     }
 }
-
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-private fun UsersScreenPreview() {
-    AppPreviewTheme {
-        UsersScreen(
-            modifier = Modifier
-                .fillMaxSize(),
-            uiState = UsersUiState(
-                users = listOf(
-                    User(name = User.Name(first = "Simform"))
-                )
-            ),
-            onUserClick = {}
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-private fun LoadingUsersScreenPreview() {
-    AppPreviewTheme {
-        UsersScreen(
-            modifier = Modifier
-                .fillMaxSize(),
-            uiState = UsersUiState(isLoading = true),
-            onUserClick = {}
-        )
-    }
-}
+//
+//@Preview(showBackground = true)
+//@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+//@Composable
+//private fun UsersScreenPreview() {
+//    AppPreviewTheme {
+//        UsersScreen(
+//            modifier = Modifier
+//                .fillMaxSize(),
+//            uiState = UsersUiState(
+//                users = listOf(
+//                    User(name = User.Name(first = "Simform"))
+//                )
+//            ),
+//            onUserClick = {}
+//        )
+//    }
+//}
+//
+//@Preview(showBackground = true)
+//@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+//@Composable
+//private fun LoadingUsersScreenPreview() {
+//    AppPreviewTheme {
+//        UsersScreen(
+//            modifier = Modifier
+//                .fillMaxSize(),
+//            uiState = UsersUiState(isLoading = true),
+//            onUserClick = {}
+//        )
+//    }
+//}
