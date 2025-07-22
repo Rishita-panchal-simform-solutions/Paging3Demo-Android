@@ -156,6 +156,7 @@ dependencies {
     annotationProcessor(libs.androidx.room.compiler)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.paging)
     
     // Paging 3
     implementation(libs.androidx.paging.runtime)
