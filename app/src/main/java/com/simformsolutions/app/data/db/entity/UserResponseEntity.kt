@@ -1,4 +1,4 @@
-package com.simformsolutions.app.domain.entity
+package com.simformsolutions.app.data.db.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
