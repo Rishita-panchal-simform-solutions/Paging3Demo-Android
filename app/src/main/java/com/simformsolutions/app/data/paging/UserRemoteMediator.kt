@@ -28,4 +28,31 @@ class UserRemoteMediator @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    private suspend fun getRemoteKeyForFirstItem(
+        state: PagingState<Int, User>
+    ): UserRemoteKeys? {
+        return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
+            ?.let { user ->
+                remoteKeysDao.getRemoteKeysById(id = user.login.uuid)
+            }
+    }
+
+    private suspend fun getRemoteKeyForLastItem(
+        state: PagingState<Int, User>
+    ): UserRemoteKeys? {
+        return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()
+            ?.let { user ->
+                remoteKeysDao.getRemoteKeysById(id = user.login.uuid)
+            }
+    }
+
+    private suspend fun getRemoteKeyClosestToCurrentPosition(
+        state: PagingState<Int, User>
+    ): UserRemoteKeys? {
+        return state.anchorPosition?.let { position ->
+            state.closestItemToPosition(position)?.login?.uuid?.let { id ->
+                remoteKeysDao.getRemoteKeysById(id = id)
+            }
+        }
+    }
 }
