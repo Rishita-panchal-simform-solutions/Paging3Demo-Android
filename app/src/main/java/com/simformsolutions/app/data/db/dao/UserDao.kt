@@ -5,17 +5,20 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.simformsolutions.app.data.db.entity.UserResponseEntity
+import com.simformsolutions.app.domain.model.User
 
 @Dao
 interface UserDao {
 
-    @Query("SELECT * FROM user_response")
-    fun getAllUsers(): PagingSource<Int, UserResponseEntity>
+    @Query("SELECT * FROM user")
+    fun getAllUsers(): PagingSource<Int, User>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertUsers(users: UserResponseEntity)
+    suspend fun insertUser(user: User)
+    
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertUsers(users: List<User>)
 
-    @Query("DELETE FROM user_response")
+    @Query("DELETE FROM user")
     suspend fun deleteAllUsers()
 }

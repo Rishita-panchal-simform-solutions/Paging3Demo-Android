@@ -6,7 +6,6 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import com.simformsolutions.app.data.db.UserDataBase
 import com.simformsolutions.app.data.db.entity.UserRemoteKeys
-import com.simformsolutions.app.data.db.entity.UserResponseEntity
 import com.simformsolutions.app.domain.model.User
 import com.simformsolutions.app.domain.remote.apiresult.ApiResult
 import com.simformsolutions.app.domain.remote.response.UserResponse
