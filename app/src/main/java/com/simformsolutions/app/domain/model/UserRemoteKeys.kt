@@ -1,6 +1,5 @@
-package com.simformsolutions.app.data.db.entity
+package com.simformsolutions.app.domain.model
 
-import androidx.room.Dao
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 

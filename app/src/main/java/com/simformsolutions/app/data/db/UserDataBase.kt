@@ -6,9 +6,8 @@ import androidx.room.TypeConverters
 import com.simformsolutions.app.data.db.converters.UserConverters
 import com.simformsolutions.app.data.db.dao.UserDao
 import com.simformsolutions.app.data.db.dao.UserRemoteKeysDao
-import com.simformsolutions.app.data.db.entity.UserRemoteKeys
+import com.simformsolutions.app.domain.model.UserRemoteKeys
 import com.simformsolutions.app.domain.model.User
-import com.simformsolutions.app.domain.remote.response.UserResponse
 
 @Database(entities = [
     User::class,
