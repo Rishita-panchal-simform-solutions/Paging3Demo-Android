@@ -16,6 +16,7 @@ import com.simformsolutions.app.domain.repository.UsersRepository
 import com.simformsolutions.app.ui.user.navigation.UserDetails
 import com.simform.navigation.Navigator
 import com.simform.navigation.getResult
+import com.simformsolutions.app.data.repository.Repository
 import com.simformsolutions.app.ui.paging.UserDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -38,10 +39,13 @@ import javax.inject.Inject
 class UsersViewModel @Inject constructor(
     private val usersRepository: UsersRepository,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
+    private val repository: Repository,
     private val navigator: Navigator
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(getDefaultUiState())
+    val getAllImages = repository.getAllUsers()
+
     val uiState = _uiState.stateIn(
         scope = viewModelScope,
         started = SharingStarted.Lazily,

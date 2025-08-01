@@ -37,10 +37,13 @@ fun UsersRoute(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val pagingList = viewModel.userPager.collectAsLazyPagingItems()
+
+    val remoteMediatorPagingData = viewModel.getAllImages.collectAsLazyPagingItems()
+
     UsersScreen(
         modifier = modifier,
         uiState = uiState,
-        pagingList = pagingList,
+        pagingList = remoteMediatorPagingData,
         onUserClick = viewModel::onUserClick
     )
 }

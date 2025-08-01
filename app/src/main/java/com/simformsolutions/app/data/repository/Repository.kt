@@ -23,7 +23,7 @@ class Repository @Inject constructor(
                 pageSize = 20,
                 enablePlaceholders = false
             ),
-            remoteMediator = UserRemoteMediator(usersRepository, userDataBase),
+            remoteMediator = UserRemoteMediator(usersRepository = usersRepository, userDataBase = userDataBase),
             pagingSourceFactory = pagingSourceFactory
         ).flow
     }
