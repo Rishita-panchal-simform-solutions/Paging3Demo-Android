@@ -6,6 +6,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface UserService {
-    @GET("https://randomuser.me/api/?inc=name,location,picture,login&results=50&seed=abc")
+    @GET("https://randomuser.me/api/?inc=name,location,picture,login&results=10&seed=abc")
     suspend fun loadUsers(@Query("page") page: Int): ApiResult<UserResponse>
 }
